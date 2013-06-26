@@ -50,12 +50,14 @@
 (require 'whitespace)
 (global-whitespace-mode 1)
 (set-face-foreground 'whitespace-space "LightSlateGray")
-(set-face-background 'whitespace-space "DarkSlateGray")
+;(set-face-background 'whitespace-space "DarkSlateGray")
 (set-face-foreground 'whitespace-tab "LightSlateGray")
-(set-face-background 'whitespace-tab "DarkSlateGray")
+;(set-face-background 'whitespace-tab "DarkSlateGray")
+; 末尾の空白を表示
+(setq-default show-trailing-whitespace t)
+(set-face-background 'trailing-whitespace "blue")
 ; フォントサイズ
 ; 一時的にメニューを表示させてOptions->Set Default Fontして、Save Optionsする。
-; 調べるの困難すぎワロタ...
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
