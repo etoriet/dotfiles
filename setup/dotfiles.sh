@@ -42,4 +42,5 @@ check_and_symlink .gitconfig
 check_and_symlink .gitconfig.local
 check_and_symlink .gitignore_global
 check_and_symlink .gitcommit_template
+check_and_symlink .Brewfile
 popd
