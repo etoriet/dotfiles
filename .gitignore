@@ -12,3 +12,8 @@ $RECYCLE.BIN/
 
 # Mac crap
 .DS_Store
+
+
+## emacs
+.emacs.d/elpa/
+.emacs.d/tramp
