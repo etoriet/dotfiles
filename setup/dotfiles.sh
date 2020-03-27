@@ -34,7 +34,7 @@ if [ ! -e "$SOURCE_DIR/../.gitconfig.local" ] ; then
     echo "[task] please edit before git commit: $SOURCE_DIR/../.gitconfig.local"
 fi
 
-pushd "$HOME"
+cd "$HOME"
 check_and_symlink .bash_profile
 check_and_symlink .emacs
 check_and_symlink .emacs.d
@@ -43,4 +43,3 @@ check_and_symlink .gitconfig.local
 check_and_symlink .gitignore_global
 check_and_symlink .gitcommit_template
 check_and_symlink .Brewfile
-popd
