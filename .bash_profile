@@ -12,12 +12,10 @@ export LSCOLORS=gxfxcxdxbxegexabagacad
 #### PATH
 # homebrew at home dir
 export PATH="$HOME/homebrew/bin:$PATH"
-# openssl installed by homebrew
-export PATH="$HOME/homebrew/opt/openssl/bin:$PATH"
-export PATH="$HOME/homebrew/opt/util-linux/bin:$PATH"
-export PATH="$HOME/homebrew/opt/util-linux/sbin:$PATH"
 # home/bin
 export PATH="$HOME/bin:$PATH"
+# openssl installed by homebrew
+export PATH="$PATH:$HOME/homebrew/opt/openssl/bin"
 
 
 #### COMMAND
@@ -53,4 +51,10 @@ password_gen () {
 
 
 #### LANGUAGES
-# TBD
+# node
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && source "$NVM_DIR/bash_completion"
+
+# rust
+export PATH="$PATH:$HOME/.cargo/bin"
