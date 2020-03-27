@@ -1,0 +1,5 @@
+#!/bin/bash
+# https://eel3.hatenablog.com/entry/20131014/1381684451
+
+# @(#) substitutes for tac(1) or `tail -q -r`
+sed '1!G;h;$!d' ${@+"$@"}

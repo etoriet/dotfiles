@@ -1,0 +1,9 @@
+#!/bin/bash
+
+TODO_LIST="$HOME/Documents/timing/TODO.txt"
+TIMING_LOG="$HOME/Documents/timing/timing.org"
+
+echo >> "$TODO_LIST"
+date +%Y-%m-%d >> "$TODO_LIST"
+
+emacs -nw "$TIMING_LOG" "$TODO_LIST" --eval "(end-of-buffer)"
