@@ -17,3 +17,4 @@ $RECYCLE.BIN/
 ## emacs
 .emacs.d/elpa/
 .emacs.d/tramp
+.emacs.d/auto-save-list
