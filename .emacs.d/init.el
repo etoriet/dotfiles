@@ -8,11 +8,11 @@
 
 
 ;;;;;; 表示周り
-(tool-bar-mode -1) ; ツールバーを非表示
+; (tool-bar-mode -1) ; ツールバーを非表示
 (menu-bar-mode -1) ; メニューバーを非表示
 (setq inhibit-startup-message t) ; 起動時の画面はいらない
 (setq initial-scratch-message "") ; scratchバッファを開いたときに空にする
-(set-scroll-bar-mode nil) ; スクロールバー非表示
+; (set-scroll-bar-mode nil) ; スクロールバー非表示
 (global-font-lock-mode t) ; font-lockの設定
 (transient-mark-mode 1) ; スクロール
 (show-paren-mode 1) ; 括弧の対応
@@ -123,8 +123,21 @@
 (setq-default tab-width 4)
 (setq c-default-style "stroustrup")
 ; ファイル末の改行がなければ追加
-(setq require-final-newline t)
+;;; (setq require-final-newline t)
 ; 行末の(タブ・半角スペース)を削除
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 ; TODO 各言語の設定を
 
+;; the package manager
+(require 'package)
+(setq
+ package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+                    ("org" . "http://orgmode.org/elpa/")
+                    ("melpa" . "http://melpa.org/packages/")
+                    ("melpa-stable" . "http://stable.melpa.org/packages/"))
+ package-archive-priorities '(("melpa-stable" . 1)))
+
+(package-initialize)
+(when (not package-archive-contents)
+  (package-refresh-contents)
+  (package-install 'use-package))
