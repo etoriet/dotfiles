@@ -58,3 +58,8 @@ export NVM_DIR="$HOME/.nvm"
 
 # rust
 export PATH="$PATH:$HOME/.cargo/bin"
+
+# python
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
