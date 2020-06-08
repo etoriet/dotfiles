@@ -63,3 +63,9 @@ export PATH="$PATH:$HOME/.cargo/bin"
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
 fi
+
+# java
+export PATH="$HOME/.jenv/bin:$PATH"
+if command -v jenv 1>/dev/null 2>&1; then
+    eval "$(jenv init -)"
+fi
