@@ -16,6 +16,8 @@ export PATH="$HOME/homebrew/bin:$PATH"
 export PATH="$HOME/bin:$PATH"
 # openssl installed by homebrew
 export PATH="$PATH:$HOME/homebrew/opt/openssl/bin"
+# mongo
+export PATH="$HOME/homebrew/opt/mongodb-community@3.6/bin:$PATH"
 
 
 #### COMMAND
