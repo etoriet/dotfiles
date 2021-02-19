@@ -18,6 +18,11 @@ export PATH="$HOME/bin:$PATH"
 export PATH="$PATH:$HOME/homebrew/opt/openssl/bin"
 # mongo
 export PATH="$HOME/homebrew/opt/mongodb-community@3.6/bin:$PATH"
+# GCP
+if [ -d "$HOME/homebrew/Caskroom/google-cloud-sdk" ] ; then
+    source "$HOME/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc"
+    source "$HOME/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc"
+fi
 
 
 #### COMMAND
@@ -64,10 +69,4 @@ export PATH="$PATH:$HOME/.cargo/bin"
 # python
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
-fi
-
-# java
-export PATH="$HOME/.jenv/bin:$PATH"
-if command -v jenv 1>/dev/null 2>&1; then
-    eval "$(jenv init -)"
 fi
