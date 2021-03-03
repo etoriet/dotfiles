@@ -23,6 +23,8 @@ if [ -d "$HOME/homebrew/Caskroom/google-cloud-sdk" ] ; then
     source "$HOME/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc"
     source "$HOME/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc"
 fi
+# direnv
+eval "$(direnv hook bash)"
 
 
 #### COMMAND
