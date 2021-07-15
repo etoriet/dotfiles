@@ -28,14 +28,20 @@ check_and_symlink () {
     fi
 }
 
+put_local () {
+    local FILE="$1"
+    if [ ! -e "$SOURCE_DIR/../$FILE" ] ; then
+        cp "$SOURCE_DIR/../${FILE}.template" "$SOURCE_DIR/../${FILE}"
+        echo "[task] please edit: $SOURCE_DIR/../${FILE}"
+    fi
+}
 
-if [ ! -e "$SOURCE_DIR/../.gitconfig.local" ] ; then
-    cp "$SOURCE_DIR/../.gitconfig.local.template" "$SOURCE_DIR/../.gitconfig.local"
-    echo "[task] please edit before git commit: $SOURCE_DIR/../.gitconfig.local"
-fi
+put_local .gitconfig.local
+put_local .bash_profile.local
 
 cd "$HOME"
 check_and_symlink .bash_profile
+check_and_symlink .bash_profile.local
 check_and_symlink .emacs
 check_and_symlink .emacs.d
 check_and_symlink .gitconfig
