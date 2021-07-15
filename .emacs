@@ -18,3 +18,5 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :stipple nil :background "black" :foreground "gray" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 139 :width normal :foundry "unknown" :family "DejaVu Sans Mono")))))
+(put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)
