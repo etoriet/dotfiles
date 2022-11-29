@@ -64,6 +64,14 @@ random_port () {
     python -c 'import socket; s=socket.socket(); s.bind(("", 0)); print(s.getsockname()[1])'
 }
 
+# clipboard to temporary file
+clip_temp () {
+    TEMP_FILE=$(mktemp /tmp/clip_temp.XXXXXX)
+    pbpaste >"$TEMP_FILE"
+    echo >>"$TEMP_FILE"
+    echo "$TEMP_FILE"
+}
+
 #### LANGUAGES
 # node
 export NVM_DIR="$HOME/.nvm"
