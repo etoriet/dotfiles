@@ -16,8 +16,6 @@ export PATH="$HOME/homebrew/bin:$PATH"
 export PATH="$HOME/bin:$PATH"
 # openssl installed by homebrew
 export PATH="$PATH:$HOME/homebrew/opt/openssl/bin"
-# mongo
-export PATH="$HOME/homebrew/opt/mongodb-community@3.6/bin:$PATH"
 # GCP
 if [ -d "$HOME/homebrew/Caskroom/google-cloud-sdk" ] ; then
     source "$HOME/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc"
@@ -33,7 +31,6 @@ alias e="emacs -nw"
 alias gs="git status"
 alias ls="ls -G" # colored ls with Mac(BSD ls)
 alias jq_less="jq . -C | less -R"
-alias amesh='docker run -e TERM_PROGRAM --rm otiai10/amesh'
 
 # cleanup command
 cleanup_tilda_files () {
