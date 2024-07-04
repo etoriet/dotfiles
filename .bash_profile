@@ -70,14 +70,6 @@ clip_temp () {
 }
 
 #### LANGUAGES
-# node
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && source "$NVM_DIR/bash_completion"
-
-# rust
-export PATH="$PATH:$HOME/.cargo/bin"
-
 # python
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
