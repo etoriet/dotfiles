@@ -1,26 +1,54 @@
 #!/usr/bin/env bash
 
-set -euC
-set -o pipefail
+set -euCo pipefail
 
-SOURCE_DIR="$(cd $(dirname "${BASH_SOURCE}") && pwd -P)"
+check_command () {
+    local CMD="$1"
+    if ! command -v "$CMD" &> /dev/null ; then
+        echo "Error: $CMD is not installed." >&2
+        exit 1
+    fi
+}
+for cmd in cd dirname pwd readlink ln cp; do
+    check_command "$cmd"
+done
+
+SOURCE_DIR="$(cd $(dirname "${BASH_SOURCE[0]}") && pwd -P)"
 if [ "$SOURCE_DIR" != "$HOME/dotfiles/setup" ] ; then
     echo "please set dotfiles at home dir $HOME"
     exit 1
 fi
 
 
+put_local () {
+    local FILE="$1"
+    if [ ! -e "$SOURCE_DIR/../$FILE" ] ; then
+        cp "$SOURCE_DIR/../${FILE}.template" "$SOURCE_DIR/../${FILE}"
+        echo "[task] please edit: $SOURCE_DIR/../${FILE}"
+    else
+        echo "[skip] creating $FILE"
+    fi
+}
+
 check_and_symlink () {
     local FILE="$1"
-    if [ "$(readlink "$HOME/$FILE")" = "$HOME/dotfiles/$FILE" ] ; then
-        echo "[skip] setting $FILE"
-    elif [ "$(readlink "$HOME/$FILE")" = "dotfiles/$FILE" ] ; then
-        echo "[skip] setting $FILE"
-    elif [ ! -e "$HOME/$FILE" ] ; then
+    local TARGET="$HOME/$FILE"
+    local LINK_TARGET="$HOME/dotfiles/$FILE"
+
+    if [ -L "$TARGET" ]; then
+        local CURRENT_LINK
+        CURRENT_LINK=$(readlink "$TARGET")
+        if [ "$CURRENT_LINK" = "$LINK_TARGET" ] || [ "$CURRENT_LINK" = "dotfiles/$FILE" ]; then
+            echo "[skip] setting $FILE"
+            return
+        fi
+    fi
+
+    if [ ! -e "$TARGET" ]; then
         echo "putting $FILE symlink"
-        ln -s "$HOME/dotfiles/$FILE"
-    elif [ -f "$HOME/$FILE" -o -d "$HOME/$FILE" ] ; then
-        echo "$HOME/$FILE already exists. please remove it first."
+        ln -s "$LINK_TARGET" "$TARGET"
+    elif [ -f "$TARGET" ] || [ -d "$TARGET" ]; then
+        echo "$TARGET already exists. please remove it first."
         return 1
     else
         echo "unknown status $FILE"
@@ -28,24 +56,13 @@ check_and_symlink () {
     fi
 }
 
-put_local () {
-    local FILE="$1"
-    if [ ! -e "$SOURCE_DIR/../$FILE" ] ; then
-        cp "$SOURCE_DIR/../${FILE}.template" "$SOURCE_DIR/../${FILE}"
-        echo "[task] please edit: $SOURCE_DIR/../${FILE}"
-    fi
-}
 
-put_local .gitconfig.local
-put_local .bash_profile.local
+local_files=(.gitconfig .bash_profile)
+for file in "${local_files[@]}"; do
+    put_local "${file}.local"
+done
 
-cd "$HOME"
-check_and_symlink .bash_profile
-check_and_symlink .bash_profile.local
-check_and_symlink .emacs
-check_and_symlink .emacs.d
-check_and_symlink .gitconfig
-check_and_symlink .gitconfig.local
-check_and_symlink .gitignore_global
-check_and_symlink .gitcommit_template
-check_and_symlink .Brewfile
+symlink_files=(.bash_profile .bash_profile.local .emacs .emacs.d .gitconfig .gitconfig.local .gitignore_global .gitcommit_template .Brewfile)
+for file in "${symlink_files[@]}"; do
+    check_and_symlink "$file"
+done
