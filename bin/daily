@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 TODO_LIST="$HOME/Documents/timing/TODO.txt"
 TIMING_LOG="$HOME/Documents/timing/timing.org"
