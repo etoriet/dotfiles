@@ -7,3 +7,5 @@
 	template = ~/.gitcommit_template
 [include]
 	path = ~/.gitconfig.local
+[push]
+	autoSetupRemote = true
