@@ -13,5 +13,5 @@ cd dotfiles
 ./setup/dotfiles.sh
 source ~/.bash_profile
 ./setup/brew.sh
-./setup/bin.sh
+./setup/daily.sh
 ```
