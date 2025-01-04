@@ -76,6 +76,12 @@ if command -v pyenv 1>/dev/null 2>&1; then
 fi
 
 
+# asdf
+if [ -f "$HOME/homebrew/opt/asdf/libexec/asdf.sh" ] ; then
+    source "$HOME/homebrew/opt/asdf/libexec/asdf.sh"
+fi
+
+
 #### environment dependent settings
 if [ -f "$HOME/.bash_profile.local" ] ; then
     source "$HOME/.bash_profile.local"
