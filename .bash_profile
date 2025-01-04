@@ -1,4 +1,4 @@
-# bash setting
+# history setting
 HISTSIZE=1000000
 HISTFILESIZE=1000000000
 HISTCONTROL=ignoreboth
@@ -6,31 +6,39 @@ HISTCONTROL=ignoreboth
 export BASH_SILENCE_DEPRECATION_WARNING=1
 # other command setting
 export LANG=ja_JP.UTF-8
-export LSCOLORS=gxfxcxdxbxegexabagacad
 
+### OS check
+if [ "$(uname)" = "Darwin" ] ; then
+    export OS="mac"
+elif [ "$(uname)" = "Linux" ] ; then
+    export OS="linux"
+fi
 
 #### PATH
-# homebrew at home dir
-export PATH="$HOME/homebrew/bin:$PATH"
-# home/bin
-export PATH="$HOME/bin:$PATH"
-# openssl installed by homebrew
-export PATH="$PATH:$HOME/homebrew/opt/openssl/bin"
-# GCP
-if [ -d "$HOME/homebrew/Caskroom/google-cloud-sdk" ] ; then
-    source "$HOME/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc"
-    source "$HOME/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc"
-fi
-# direnv
-eval "$(direnv hook bash)"
+check_and_set_path() {
+    if [ -d "$1" ] ; then
+        export PATH="$1:$PATH"
+    fi
+}
+check_and_set_path "$HOME/homebrew/bin"
+check_and_set_path "$HOME/bin"
+check_and_set_path "$HOME/.local/bin"
+check_and_set_path "$HOME/homebrew/opt/openssl/bin"
 
-
-#### COMMAND
+#### COMMAND/visibility
 # alias
 alias e="emacs -nw"
 alias gs="git status"
-alias ls="ls -G" # colored ls with Mac(BSD ls)
-alias jq_less="jq . -C | less -R"
+if [ "$OS" = "mac" ] ; then
+    export LSCOLORS=gxfxcxdxbxegexabagacad
+    alias ls="ls -G" # colored ls with Mac(BSD ls)
+elif [ "$OS" = "linux" ] ; then
+    alias ls="ls --color=auto"
+    PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+fi
+if command -v jq 1>/dev/null 2>&1; then
+    alias jq_less="jq . -C | less -R"
+fi
 
 # cleanup command
 cleanup_tilda_files () {
@@ -50,37 +58,52 @@ cleanup_tilda_files () {
 }
 
 # password generator
-password_gen () {
-    openssl rand -base64 27 | tr -dc A-Za-z0-9
-    echo
-}
+if command -v openssl 1>/dev/null 2>&1; then
+    password_gen () {
+        openssl rand -base64 27 | tr -dc A-Za-z0-9
+        echo
+    }
+fi
 
 # random port
-random_port () {
+if command -v python 1>/dev/null 2>&1; then
     # https://unix.stackexchange.com/questions/55913/whats-the-easiest-way-to-find-an-unused-local-port
-    python -c 'import socket; s=socket.socket(); s.bind(("", 0)); print(s.getsockname()[1])'
-}
+    random_port () {
+        python -c 'import socket; s=socket.socket(); s.bind(("", 0)); print(s.getsockname()[1])'
+    }
+fi
 
 # clipboard to temporary file
-clip_temp () {
-    TEMP_FILE=$(mktemp /tmp/clip_temp.XXXXXX)
-    pbpaste >"$TEMP_FILE"
-    echo >>"$TEMP_FILE"
-    echo "$TEMP_FILE"
-}
+if command -v pbpaste 1>/dev/null 2>&1; then
+    clip_temp () {
+        TEMP_FILE=$(mktemp /tmp/clip_temp.XXXXXX)
+        pbpaste >"$TEMP_FILE"
+        echo >>"$TEMP_FILE"
+        echo "$TEMP_FILE"
+    }
+fi
 
-#### LANGUAGES
-# python
+#### tools
+# pyenv
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
 fi
 
+# direnv
+if command -v direnv 1>/dev/null 2>&1; then
+    eval "$(direnv hook bash)"
+fi
 
 # asdf
 if [ -f "$HOME/homebrew/opt/asdf/libexec/asdf.sh" ] ; then
     source "$HOME/homebrew/opt/asdf/libexec/asdf.sh"
 fi
 
+# GCP
+if [ -d "$HOME/homebrew/Caskroom/google-cloud-sdk" ] ; then
+    source "$HOME/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc"
+    source "$HOME/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc"
+fi
 
 #### environment dependent settings
 if [ -f "$HOME/.bash_profile.local" ] ; then
