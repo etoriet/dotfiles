@@ -66,17 +66,17 @@ if command -v openssl 1>/dev/null 2>&1; then
 fi
 
 # random port
-if command -v python 1>/dev/null 2>&1; then
+if command -v python3 1>/dev/null 2>&1; then
     # https://unix.stackexchange.com/questions/55913/whats-the-easiest-way-to-find-an-unused-local-port
     random_port () {
-        python -c 'import socket; s=socket.socket(); s.bind(("", 0)); print(s.getsockname()[1])'
+        python3 -c 'import socket; s=socket.socket(); s.bind(("", 0)); print(s.getsockname()[1])'
     }
 fi
 
 # clipboard to temporary file
 if command -v pbpaste 1>/dev/null 2>&1; then
     clip_temp () {
-        TEMP_FILE=$(mktemp /tmp/clip_temp.XXXXXX)
+        TEMP_FILE=$(mktemp "/tmp/clip_temp.XXXXXX")
         pbpaste >"$TEMP_FILE"
         echo >>"$TEMP_FILE"
         echo "$TEMP_FILE"
@@ -104,6 +104,10 @@ if [ -d "$HOME/homebrew/Caskroom/google-cloud-sdk" ] ; then
     source "$HOME/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc"
     source "$HOME/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc"
 fi
+
+#### cleanup
+unset -f check_and_set_path
+unset OS
 
 #### environment dependent settings
 if [ -f "$HOME/.bash_profile.local" ] ; then
