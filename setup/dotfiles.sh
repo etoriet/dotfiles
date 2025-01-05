@@ -62,7 +62,7 @@ for file in "${local_files[@]}"; do
     put_local "${file}.local"
 done
 
-symlink_files=(.bash_profile .bash_profile.local .emacs .emacs.d .gitconfig .gitconfig.local .gitignore_global .gitcommit_template .Brewfile)
+symlink_files=(.bash_profile .bash_profile.local .emacs .emacs.d .gitconfig .gitconfig.local .gitignore_global .gitcommit_template)
 for file in "${symlink_files[@]}"; do
     check_and_symlink "$file"
 done
