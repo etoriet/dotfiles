@@ -1,7 +1,5 @@
 tap "aquasecurity/trivy"
 tap "beeftornado/rmtree"
-tap "homebrew/bundle"
-tap "homebrew/services"
 tap "rcmdnk/file"
 brew "xz"
 brew "automake"
